@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "childrens-toy-app",
+    "slug": "childrens-toy-app",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "childrens-toy-app"
+}
