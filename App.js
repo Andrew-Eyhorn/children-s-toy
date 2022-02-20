@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { render } from 'react-dom';
 import { StyleSheet, Text, View, Button } from 'react-native';
 const App = () => {
-  const [selectedLetter, letterSelected] = useState("none");
+  const [selectedLetter, letterSelected] = useState("none"); //merge into one state object
   const selectLetter = (letter) => {
     letterSelected(letter)
   }
@@ -15,13 +15,30 @@ const App = () => {
   const selectPair = (type) => {
     pairSelected(type)
   }
+  const reset = () => { //add function to restart whole game
+    setTimeout(() => {
+      pairSelected("none")
+      imageSelected("none")
+    }, 1000);
+  }
+
+  // const data = [    //make letterButtonList and imageButtonList into one array of objects. 
+  //   {
+  //     letter: 'A',
+  //     image: 'Apple'
+  //   },
+  //   {
+  //     letter: 'B',
+  //     image: 'Bottle'
+  //   }    
+  // ];
   return (
     <View style={styles.container}>
       <Text>Match the Letter and Image!</Text>
       <StatusBar style="auto" />
       <LetterButtons letter = {selectedLetter} selector={selectLetter} />
       <ImageButtons image = {selectedImage} selector={selectImage} letter = {selectedLetter} choosePair = {selectPair}/>
-      <ResultDisplay chosenPair = {selectedPair} choosePair = {selectPair} selector={selectImage}/>
+      <ResultDisplay chosenPair = {selectedPair} reset = {reset}/>
     </View>
   );
 }
@@ -41,8 +58,8 @@ const LetterButtons = (props) => {
   </View>
  )
 }
-const imageButtonList = ["Apple", "Banana", "Crocodile", "Dragoon", "Egg"]
-const ImageButtons = (props) => {
+const imageButtonList = ["Apple", "Banana", "Crocodile", "Dragon", "Egg"] 
+const ImageButtons = (props) => { //Make imageButtons have images wow what a concept
   return(
   <View style={styles.imageButtons}>
 {imageButtonList.map((name, index) => 
@@ -57,7 +74,7 @@ const ImageButtons = (props) => {
       props.choosePair("Incorrect")
     }
   }}   
-  disabled={props.image != "none" && props.image != name}/>
+  disabled={props.letter === "none" || props.image != "none" && props.image != name}/>
 )}
    </View>
   )
@@ -65,11 +82,10 @@ const ImageButtons = (props) => {
  const ResultDisplay = (props) => {
   if (props.chosenPair === "none") {
     return(<View><Text></Text></View>)
-} else if (props.chosenPair === "correct"){
+} else if (props.chosenPair === "Correct"){
   return(<View><Text>{props.chosenPair}</Text></View>)
 }else {
-  props.choosePair("none")
-  props.selector("none")
+  props.reset()
   return(<View><Text>{props.chosenPair}</Text></View>)
 }
 }
