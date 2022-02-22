@@ -21,6 +21,13 @@ const App = () => {
       imageSelected("none")
     }, 1000);
   }
+  const restart = () => {
+    setTimeout(() => {
+      pairSelected("none")
+      imageSelected("none")
+      letterSelected("none")
+    }, 100);
+  }
 
   // const data = [    //make letterButtonList and imageButtonList into one array of objects. 
   //   {
@@ -39,6 +46,7 @@ const App = () => {
       <LetterButtons letter = {selectedLetter} selector={selectLetter} />
       <ImageButtons image = {selectedImage} selector={selectImage} letter = {selectedLetter} choosePair = {selectPair}/>
       <ResultDisplay chosenPair = {selectedPair} reset = {reset}/>
+      <RestartButton reset = {restart}/>
     </View>
   );
 }
@@ -88,6 +96,17 @@ const ImageButtons = (props) => { //Make imageButtons have images wow what a con
   props.reset()
   return(<View><Text>{props.chosenPair}</Text></View>)
 }
+}
+const RestartButton = (props) => {
+return(<View style={styles.imageButtons}>
+<Button 
+title = "Restart"
+color="#958890"
+onPress={() => {
+  props.reset()
+}}
+/>
+</View>)
 }
 // const GenerateResultDisplay = (props) => {
 //   if (props.chosenPair === "none") {
