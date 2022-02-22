@@ -1,7 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { render } from 'react-dom';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Touchable } from 'react-native';
+import { TouchableOpacity } from 'react-native-web';
+import { Image } from 'react-native';
 const App = () => {
   const [selectedLetter, letterSelected] = useState("none"); //merge into one state object
   const selectLetter = (letter) => {
@@ -69,9 +71,10 @@ const LetterButtons = (props) => {
 const imageButtonList = ["Apple", "Banana", "Crocodile", "Dragon", "Egg"] 
 const ImageButtons = (props) => { //Make imageButtons have images wow what a concept
   return(
-  <View style={styles.imageButtons}>
+  <View style={styles.container}>
 {imageButtonList.map((name, index) => 
-    <Button  key = {index}
+    <TouchableOpacity style={styles.imageButtons}
+    key = {index}
   title= {name}
   color="#958890"
   onPress={() => {
@@ -82,11 +85,33 @@ const ImageButtons = (props) => { //Make imageButtons have images wow what a con
       props.choosePair("Incorrect")
     }
   }}   
-  disabled={props.letter === "none" || props.image != "none" && props.image != name}/>
+  disabled={props.letter === "none" || props.image != "none" && props.image != name}>
+<Image source={require('./Assets/'+name+'.png')} style={{ width: 40, height: 40 }}/>
+    </TouchableOpacity>
 )}
    </View>
   )
  }
+//  const ImageButtons = (props) => { //Make imageButtons have images wow what a concept
+//   return(
+//   <View style={styles.imageButtons}>
+// {imageButtonList.map((name, index) => 
+//     <Button  key = {index}
+//   title= {name}
+//   color="#958890"
+//   onPress={() => {
+//     props.selector(name);
+//     if(name.charAt(0) === props.letter) {
+//       props.choosePair("Correct")
+//     } else {
+//       props.choosePair("Incorrect")
+//     }
+//   }}   
+//   disabled={props.letter === "none" || props.image != "none" && props.image != name}/>
+// )}
+//    </View>
+//   )
+//  }
  const ResultDisplay = (props) => {
   if (props.chosenPair === "none") {
     return(<View><Text></Text></View>)
@@ -98,7 +123,7 @@ const ImageButtons = (props) => { //Make imageButtons have images wow what a con
 }
 }
 const RestartButton = (props) => {
-return(<View style={styles.imageButtons}>
+return(<View style={styles.restartButton}>
 <Button 
 title = "Restart"
 color="#958890"
@@ -108,19 +133,6 @@ onPress={() => {
 />
 </View>)
 }
-// const GenerateResultDisplay = (props) => {
-//   if (props.chosenPair === "none") {
-//     return("")
-// } else if (props.chosenPair === "correct"){
-//   return(props.chosenPair)
-// }else {
-//   props.choosePair("none")
-//   props.selector("none")
-//   return(props.chosenPair)
-// }}
-// const ResultDisplay = (props) => {
-//   return(<View><Text>{GenerateResultDisplay(props)}</Text></View>)
-// }
 export default App;
 const styles = StyleSheet.create({
   container: {
@@ -135,8 +147,10 @@ const styles = StyleSheet.create({
     display: 'flex'
   },
     imageButtons: {
-      width:'20%',
-      height:'50%',
       display: 'flex',
   },
+  restartButton: {
+    width:'20%',
+    height:'50%',
+  }
 });
