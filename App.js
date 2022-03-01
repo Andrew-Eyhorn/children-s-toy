@@ -71,7 +71,7 @@ const LetterButtons = (props) => {
 const imageButtonList = ["Apple", "Banana", "Crocodile", "Dragon", "Egg"] 
 const ImageButtons = (props) => { //Make imageButtons have images wow what a concept
   return(
-  <View style={styles.container}>
+  <View style={styles.imageButtons}>
 {imageButtonList.map((name, index) => 
     <TouchableOpacity style={styles.imageButtons}
     key = {index}
@@ -142,12 +142,14 @@ const styles = StyleSheet.create({
     display: 'flex',
   },
   letterButtons: {
-    width:'20%',
-    height:'50%',
-    display: 'flex'
+    width:'40%',
+    height:'15%',
+    display: 'flex',
+    flexDirection: 'row',
   },
     imageButtons: {
       display: 'flex',
+      flexDirection: 'column',
   },
   restartButton: {
     width:'20%',
