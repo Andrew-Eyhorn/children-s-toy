@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, Button, Touchable } from 'react-native';
 import { TouchableOpacity } from 'react-native-web';
 import { Image } from 'react-native';
 const App = () => {
-  const [selectedLetter, letterSelected] = useState("none"); //merge into one state object
+  const [selectedLetter, letterSelected] = useState("none"); 
   const selectLetter = (letter) => {
     letterSelected(letter)
   }
@@ -17,7 +17,7 @@ const App = () => {
   const selectPair = (type) => {
     pairSelected(type)
   }
-  const reset = () => { //add function to restart whole game
+  const reset = () => { 
     setTimeout(() => {
       pairSelected("none")
       imageSelected("none")
@@ -30,25 +30,18 @@ const App = () => {
       letterSelected("none")
     }, 100);
   }
-
-  // const data = [    //make letterButtonList and imageButtonList into one array of objects. 
-  //   {
-  //     letter: 'A',
-  //     image: 'Apple'
-  //   },
-  //   {
-  //     letter: 'B',
-  //     image: 'Bottle'
-  //   }    
-  // ];
   return (
-    <View style={styles.container}>
+    <View style = {styles.container}>
+      <View style={styles.subContainer}>
       <Text>Match the Letter and Image!</Text>
+      <RestartButton reset = {restart}/>
       <StatusBar style="auto" />
       <LetterButtons letter = {selectedLetter} selector={selectLetter} />
+      </View>
+      <View style = {styles.subContainer}>
       <ImageButtons image = {selectedImage} selector={selectImage} letter = {selectedLetter} choosePair = {selectPair}/>
       <ResultDisplay chosenPair = {selectedPair} reset = {reset}/>
-      <RestartButton reset = {restart}/>
+      </View>
     </View>
   );
 }
@@ -92,34 +85,14 @@ const ImageButtons = (props) => { //Make imageButtons have images wow what a con
    </View>
   )
  }
-//  const ImageButtons = (props) => { //Make imageButtons have images wow what a concept
-//   return(
-//   <View style={styles.imageButtons}>
-// {imageButtonList.map((name, index) => 
-//     <Button  key = {index}
-//   title= {name}
-//   color="#958890"
-//   onPress={() => {
-//     props.selector(name);
-//     if(name.charAt(0) === props.letter) {
-//       props.choosePair("Correct")
-//     } else {
-//       props.choosePair("Incorrect")
-//     }
-//   }}   
-//   disabled={props.letter === "none" || props.image != "none" && props.image != name}/>
-// )}
-//    </View>
-//   )
-//  }
  const ResultDisplay = (props) => {
   if (props.chosenPair === "none") {
     return(<View><Text></Text></View>)
 } else if (props.chosenPair === "Correct"){
-  return(<View><Text>{props.chosenPair}</Text></View>)
+  return(<View><Text  style = {styles.correct}>{props.chosenPair}</Text></View>)
 }else {
   props.reset()
-  return(<View><Text>{props.chosenPair}</Text></View>)
+  return(<View><Text  style = {styles.incorrect}>{props.chosenPair}</Text></View>)
 }
 }
 const RestartButton = (props) => {
@@ -140,19 +113,33 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'left',
     display: 'flex',
-  },
-  letterButtons: {
-    width:'40%',
-    height:'15%',
-    display: 'flex',
     flexDirection: 'row',
   },
+  subContainer: {
+    alignContent: 'left',
+    backgroundColor: '#fff',
+    justifyContent: 'left',
+    display: 'flex',
+    paddingLeft: '25px',
+  },
+  letterButtons: {
+    width:'250px',
+    height:'10px',
+    paddingTop: '10px',
+  },
     imageButtons: {
-      display: 'flex',
-      flexDirection: 'column',
+      paddingTop: '10px',
   },
   restartButton: {
-    width:'20%',
-    height:'50%',
-  }
+    width:'100px',
+    height:'50',
+  },
+  correct: {
+    color: '#32CD32',
+    fontSize: '35px'
+  },
+  incorrect: {
+    color: '#FF0000',
+    fontSize: '25px'
+  },
 });
